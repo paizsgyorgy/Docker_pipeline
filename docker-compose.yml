@@ -1,0 +1,40 @@
+# docker-compose.yml
+version: '3'
+
+services:
+  mongodb:
+    image: mongo
+    ports:
+    - "27017:27017"
+
+  postgresdb:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: twitterdb
+    ports:
+    - "5431:5432"
+
+  tweet_collector:
+    build: tweet_collector/
+    volumes:
+    - ./tweet_collector/:/app
+    links:
+    - mongodb
+
+  etl_job:
+    build: etl_job/
+    volumes:
+    - ./etl_job/:/app
+    links:
+    - mongodb
+    - postgresdb
+    depends_on:
+    - tweet_collector
+
+  slackbot:
+    build: slackbot/
+    volumes:
+    - ./slackbot/:/app
+    links:
+    - postgresdb
