@@ -1,6 +1,4 @@
-vaderSentiment
-pymongo
+slackclient
 SQLAlchemy
 requests
 psycopg2-binary
-pandas

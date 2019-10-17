@@ -4,8 +4,9 @@ FROM python:3.6-slim
 
 WORKDIR /app
 
-# RUN pip install --trusted-host pypi.python.org pandas
+COPY requirements.txt /app
+RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
 #--- Everything above happens when building the image ---
 
-CMD ["python", "hello.py"]
+CMD ["python", "slackbot.py"]

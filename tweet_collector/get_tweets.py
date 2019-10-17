@@ -6,14 +6,18 @@ from loginkey import config
 from pymongo import MongoClient
 
 #Step 1: Connect to MongoDB - Note: Change connection string as needed
+# 1) Local mongodb connection (ONLY FOR TESTING)
+#connection_string = 'mongodb://localhost:27017/'
+
+# 2) Mongodb running in docker container
 connection_string = 'mongodb'
+
 conn = MongoClient(connection_string)
 
 ## Initialize the twitterdata database and the tweets collection
 ## This is where data will be inserted
 db = conn.twitterdata # Define database to switch to/create if not already available
 collection = db.tweets # Define collection to switch to/create if not already available
-
 
 # These are the search keyword we will use to get tweets
 KEYWORDS = ['python']
@@ -91,7 +95,7 @@ class StreamListener(tweepy.StreamListener):
         if t['retweeted'] == False and 'RT' not in t['text'] and t['in_reply_to_status_id'] == None:
             tweet = self.get_tweet_dict(t)
             self.callback(tweet)
-            self.counter += 1
+            self.counter = 1 # Using "+=" here will limit the function
             if self.counter == self.limit:
                 return False
 
