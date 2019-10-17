@@ -73,12 +73,12 @@ while True:
     cols = ['created_at', 'id', 'text', 'username', 'followers', 'user_favorites_count',
             'retweets', 'favorites', 'hashtags', 'media_url', 'media_type', 'interesting']
     df = pd.DataFrame(tweets, columns=cols)
+    df['created_at'] = pd.to_datetime(df['created_at'], infer_datetime_format=True)
     df['sentiment_neg'] = df['text'].apply(vader, args=('neg',))
     df['sentiment_neu'] = df['text'].apply(vader, args=('neu',))
     df['sentiment_pos'] = df['text'].apply(vader, args=('pos',))
     df['sentiment_comp'] = df['text'].apply(vader, args=('compound',))
     df.to_sql('tweetdata', con=engine, if_exists='append')
-
 
 ############################################################################
 #
