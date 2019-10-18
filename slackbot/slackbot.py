@@ -15,18 +15,24 @@ engine = create_engine('postgresql://postgres:postgres@postgresdb:5432/twitterdb
 # Twitter connection
 client = slack.WebClient(token=token_2)
 
-# Load one tweet from postgresdb
-def load_tweet():
-    result = engine.execute("""SELECT created_at, text, sentiment_comp FROM tweetdata ORDER BY created_at DESC LIMIT 1;""")
+# Load tweets from postgresdb
+def load_tweet(sql_statement):
+    result = engine.execute(sql_statement)
     for tweet in result:
         return tweet
+
+# Define statement to return last available tweet from the postgres database
+statement = """ SELECT created_at, text, sentiment_comp
+                FROM tweetdata
+                ORDER BY created_at
+                DESC LIMIT 1;"""
 
 # Define sleeptime for slackbot to wait between consequent messages
 sleeptime = 60
 
 # Run a while loop until the Docker container is shut down
 while True:
-    tweet = load_tweet()
+    tweet = load_tweet(statement)
     message = f"""Hello from Docker! This is the latest Twitter message that contains the word "Python": {tweet[1]}. The compound sentiment score of the tweet is: {tweet[2]}"""
     response = client.chat_postMessage(channel='#slack_bot', text=message)
     time.sleep(sleeptime)
