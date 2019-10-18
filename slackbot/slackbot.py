@@ -33,6 +33,6 @@ sleeptime = 60
 # Run a while loop until the Docker container is shut down
 while True:
     tweet = load_tweet(statement)
-    message = f"""Hello from Docker! This is the latest Twitter message that contains the word "Python": {tweet[1]}. The compound sentiment score of the tweet is: {tweet[2]}"""
+    message = f"""Hello from Docker! This is the latest Twitter message that contains the word "Hungary": {tweet[1]}. The compound sentiment score of the tweet is: {tweet[2]}"""
     response = client.chat_postMessage(channel='#slack_bot', text=message)
     time.sleep(sleeptime)
