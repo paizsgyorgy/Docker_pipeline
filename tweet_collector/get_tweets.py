@@ -20,7 +20,7 @@ db = conn.twitterdata # Define database to switch to/create if not already avail
 collection = db.tweets # Define collection to switch to/create if not already available
 
 # These are the search keyword we will use to get tweets
-KEYWORDS = ['python']
+KEYWORDS = ['Hungary']
 
 consumer_key = config['consumer_key']
 consumer_secret = config['consumer_key_secret']
