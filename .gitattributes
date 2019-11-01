@@ -1,0 +1,11 @@
+
+# Classify Jupyter notebook as Python code
+*.ipynb linguist-language=Python
+
+# Exclude files from language detection
+*.html linguist-vendored=true
+*.css linguist-vendored=true
+
+# Exclude files from exporting
+.gitattributes  export-ignore
+.gitignore      export-ignore
